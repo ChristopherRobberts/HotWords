@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +6,7 @@ public class Trie {
     private Node root = new Node();
     private int assCount = 0;
     private int distinctCount;
-    private String biggest;
+
 
     private static class Node{
         private int value;
@@ -106,12 +105,6 @@ public class Trie {
         return lst;
     }
 
-    /*public ArrayList <Integer> keysWithPref(String prefix){
-        ArrayList<Integer> lst = new ArrayList<Integer>();
-        Node x = getVal(root, prefix, 0);
-        collect2(x, new StringBuilder(prefix), lst);
-        return lst;
-    }*/
 
     private void collect(Node x, StringBuilder prefix, List<String> results){
         if (x == null)
@@ -126,18 +119,6 @@ public class Trie {
         }
     }
 
-    /*private void collect2(Node x, StringBuilder prefix, List<Integer> results){
-        if (x == null)
-            return;
-        if (x.value != 0) {
-            results.add(x.value);                       //append the value to the word.
-        }
-        for(char c = 0; c < ASCII_MAX; c++){            //we call recursively upon this method whilst appending a new
-            prefix.append(c);                           //char to the prefix, if the pattern matches a previous key in
-            collect2(x.children[c], prefix, results);    //the trie, we add this appended prefix to our list.
-            prefix.deleteCharAt(prefix.length() - 1);
-        }
-    }*/
 
     public void counterReset(){
         assCount = 0;

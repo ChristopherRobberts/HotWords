@@ -2,11 +2,8 @@
  * Created by Chris on 2017-09-23.
  */
 import edu.princeton.cs.introcs.In;
-
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Driver {
 
@@ -31,8 +28,9 @@ public class Driver {
             }
 
             for (String word : words) {
-                String word2 = word.replaceAll("\"|\\(|\\)", " ");
-
+                //String word2 = word.replaceAll("\"|\\(|\\)", " ");
+                String word2 = word.replaceAll("\\P{Print}", "");
+                word2 = word2.replaceAll("\"|\\(|\\)", "");
                 if (word2.isEmpty()) {
                     continue;
                 }
@@ -42,8 +40,10 @@ public class Driver {
         }
         ArrayList<String> listOfWords = t.keysWithPrefix("");
         ArrayList<String> secondListOfWords = t.keysWithPrefix("");
+        ArrayList<String> thirdListOfWords = t.keysWithPrefix("");
         ArrayList<String> highest = new ArrayList<String>();
         ArrayList<String> lowest = new ArrayList<String>();
+        ArrayList<String> xd = new ArrayList<String>();
         highestFrequency(t, listOfWords, highest, 0);
         lowestFrequency(t, secondListOfWords, lowest, 0);
 
@@ -56,6 +56,26 @@ public class Driver {
         for(int i = 0; i < lowest.size(); i++){
             System.out.print (lowest.get(i) + ", ");
         }
+        System.out.println();
+
+        System.out.println("th=" + t.countSamePrefix("th"));
+        t.counterReset();
+        System.out.println("it=" + t.countSamePrefix("it"));
+        t.counterReset();
+        System.out.println("if=" + t.countSamePrefix("if"));
+        t.counterReset();
+        System.out.println("an=" + t.countSamePrefix("an"));
+        t.counterReset();
+
+        System.out.println("s : " + t.distinctKey("s"));
+        t.distinctCounterReset();
+        System.out.println("t : " + t.distinctKey("t"));
+        t.distinctCounterReset();
+        System.out.println("a : " + t.distinctKey("a"));
+        t.distinctCounterReset();
+        System.out.println("i : " + t.distinctKey("i"));
+        t.distinctCounterReset();
+        System.out.println(highestFrequenc(t, thirdListOfWords, xd, 0));
     }
 
     private static ArrayList<String> highestFrequency(Trie t, ArrayList<String> s, ArrayList<String> lst, int counter){
@@ -92,5 +112,33 @@ public class Driver {
         lst.add(str.append(" " + min).toString());
         s.remove(l.toString());
         return lowestFrequency(t, s, lst, counter + 1);
+    }
+
+    private static ArrayList<String> highestFrequenc(Trie t, ArrayList<String> s, ArrayList<String> xd, int counter){
+        t.counterReset();
+        if(counter == 4){
+            return xd;
+        }
+        int max = t.countSamePrefix(s.get(0));
+        t.counterReset();
+        StringBuilder l = new StringBuilder(s.get(0));
+        for (int i = 0; i < s.size(); i++){
+            if (max < t.countSamePrefix(s.get(i))) {
+                max = t.countSamePrefix(s.get(i));
+                t.counterReset();
+                if(s.get(i).length() >= 2) {
+                    l = new StringBuilder(s.get(i).substring(0, 2));
+                }
+                else
+                    l = new StringBuilder((s.get(i)));
+
+            }
+            t.counterReset();
+        }
+        StringBuilder str = new StringBuilder(l);
+        xd.add(str.append(" " + max).toString());
+        s.remove(l.toString());
+        t.counterReset();
+        return highestFrequenc(t, s, xd,counter + 1);
     }
 }
