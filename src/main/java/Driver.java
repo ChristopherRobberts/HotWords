@@ -40,21 +40,19 @@ public class Driver {
         }
         ArrayList<String> listOfWords = t.keysWithPrefix("");
         ArrayList<String> secondListOfWords = t.keysWithPrefix("");
-        ArrayList<String> thirdListOfWords = t.keysWithPrefix("");
         ArrayList<String> highest = new ArrayList<String>();
         ArrayList<String> lowest = new ArrayList<String>();
-        ArrayList<String> xd = new ArrayList<String>();
         highestFrequency(t, listOfWords, highest, 0);
         lowestFrequency(t, secondListOfWords, lowest, 0);
 
         System.out.print("Highest frequency words : ");
-        for(int i = 0; i < highest.size(); i++){
-            System.out.print (highest.get(i) + ", ");
+        for (int i = 0; i < highest.size(); i++) {
+            System.out.print(highest.get(i) + ", ");
         }
         System.out.println();
         System.out.print("Lowest frequency words : ");
-        for(int i = 0; i < lowest.size(); i++){
-            System.out.print (lowest.get(i) + ", ");
+        for (int i = 0; i < lowest.size(); i++) {
+            System.out.print(lowest.get(i) + ", ");
         }
         System.out.println();
 
@@ -66,7 +64,7 @@ public class Driver {
         t.counterReset();
         System.out.println("an=" + t.countSamePrefix("an"));
         t.counterReset();
-
+        System.out.println();
         System.out.println("s : " + t.distinctKey("s"));
         t.distinctCounterReset();
         System.out.println("t : " + t.distinctKey("t"));
@@ -75,19 +73,19 @@ public class Driver {
         t.distinctCounterReset();
         System.out.println("i : " + t.distinctKey("i"));
         t.distinctCounterReset();
-        System.out.println(highestFrequenc(t, thirdListOfWords, xd, 0));
+
     }
 
-    private static ArrayList<String> highestFrequency(Trie t, ArrayList<String> s, ArrayList<String> lst, int counter){
-        if(counter == 10){
+    private static ArrayList<String> highestFrequency(Trie t, ArrayList<String> s, ArrayList<String> lst, int counter) {
+        if (counter == 10) {
             return lst;
         }
         int max = t.getVal(s.get(0));
         StringBuilder l = new StringBuilder(s.get(0));
-        for (int i = 0; i < s.size(); i++){
+        for (int i = 0; i < s.size(); i++) {
             if (max < t.getVal(s.get(i))) {
                 max = t.getVal(s.get(i));
-                l =  new StringBuilder(s.get(i));
+                l = new StringBuilder(s.get(i));
             }
         }
         StringBuilder str = new StringBuilder(l);
@@ -96,14 +94,14 @@ public class Driver {
         return highestFrequency(t, s, lst, counter + 1);
     }
 
-    private static ArrayList<String> lowestFrequency(Trie t, ArrayList<String> s, ArrayList<String> lst, int counter){
-        if (counter == 10){
+    private static ArrayList<String> lowestFrequency(Trie t, ArrayList<String> s, ArrayList<String> lst, int counter) {
+        if (counter == 10) {
             return lst;
         }
         int min = t.getVal(s.get(0));
         StringBuilder l = new StringBuilder(s.get(0));
-        for (int i = 0; i < s.size(); i++){
-            if (min > t.getVal(s.get(i))){
+        for (int i = 0; i < s.size(); i++) {
+            if (min > t.getVal(s.get(i))) {
                 min = t.getVal(s.get(i));
                 l = new StringBuilder(s.get(i));
             }
@@ -112,33 +110,5 @@ public class Driver {
         lst.add(str.append(" " + min).toString());
         s.remove(l.toString());
         return lowestFrequency(t, s, lst, counter + 1);
-    }
-
-    private static ArrayList<String> highestFrequenc(Trie t, ArrayList<String> s, ArrayList<String> xd, int counter){
-        t.counterReset();
-        if(counter == 4){
-            return xd;
-        }
-        int max = t.countSamePrefix(s.get(0));
-        t.counterReset();
-        StringBuilder l = new StringBuilder(s.get(0));
-        for (int i = 0; i < s.size(); i++){
-            if (max < t.countSamePrefix(s.get(i))) {
-                max = t.countSamePrefix(s.get(i));
-                t.counterReset();
-                if(s.get(i).length() >= 2) {
-                    l = new StringBuilder(s.get(i).substring(0, 2));
-                }
-                else
-                    l = new StringBuilder((s.get(i)));
-
-            }
-            t.counterReset();
-        }
-        StringBuilder str = new StringBuilder(l);
-        xd.add(str.append(" " + max).toString());
-        s.remove(l.toString());
-        t.counterReset();
-        return highestFrequenc(t, s, xd,counter + 1);
     }
 }
